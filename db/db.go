@@ -1,13 +1,13 @@
-package main
+package db
 
 import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-var gormdb *gorm.DB
+var Gormdb *gorm.DB
 
 func Init(dbpath string) (err error) {
-	gormdb, err = gorm.Open(sqlite.Open(dbpath), &gorm.Config{})
+	Gormdb, err = gorm.Open(sqlite.Open(dbpath), &gorm.Config{})
 	return err
 }

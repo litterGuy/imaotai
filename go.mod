@@ -3,6 +3,7 @@ module imaotai
 go 1.19
 
 require (
+	github.com/robfig/cron/v3 v3.0.1
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/sqlite v1.5.2
 	gorm.io/gorm v1.25.2
