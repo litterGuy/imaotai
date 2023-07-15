@@ -30,7 +30,7 @@ func main() {
 
 	flag.StringVar(&codephone, "codephone", "", "要登录的手机号")
 
-	flag.StringVar(&phone, "login", "", "登录手机号")
+	flag.StringVar(&phone, "phone", "", "登录手机号")
 	flag.StringVar(&code, "code", "", "登录验证码")
 
 	// 从arguments中解析注册的flag。必须在所有flag都注册好而未访问其值时执行。未注册却使用flag -help时，会返回ErrHelp。
