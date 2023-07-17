@@ -8,3 +8,6 @@ account:
     province: 1234
     city: 1234
     reserveType: 1
+pushplus:
+  token: 1234
+  topic: 1234

@@ -3,6 +3,7 @@ package task
 import (
 	"github.com/robfig/cron/v3"
 	"imaotai/config"
+	"imaotai/msg"
 	"imaotai/service"
 	"log"
 	"os"
@@ -28,12 +29,20 @@ func (c *CronTask) AddTask() {
 	_, _ = c.Task.AddFunc("0 0 7 * * ?", func() {
 		log.Printf("start task, and time = %d\n", time.Now().Unix())
 		err := service.RefreshData(config.Configs)
-		log.Println(err.Error())
+		if err != nil {
+			log.Println(err.Error())
+			msg.SendPushPlus(err.Error())
+		}
 	})
 	// 每天9点20预约
 	_, _ = c.Task.AddFunc("0 20 9 * * ?", func() {
 		log.Printf("start task, and time = %d\n", time.Now().Unix())
-		err := service.Reservation(config.Configs)
-		log.Println(err.Error())
+		rt, err := service.Reservation(config.Configs)
+		if err != nil {
+			log.Println(err.Error())
+			msg.SendPushPlus(err.Error())
+		} else {
+			msg.SendPushPlus(rt)
+		}
 	})
 }

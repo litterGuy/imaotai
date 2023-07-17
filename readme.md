@@ -87,10 +87,14 @@ ${config.yml} 为本地的配置文件
 docker cp imaotai:/app/imaotai .
 ```
 
+## 增加pushplus推送
+
+去[官网](http://www.pushplus.plus/push2.html)获取到token和topic后，填入到配置文件
+
 ## 未添加事项
 
 - [ ] 没有指定哪种酒预约。目前是预约查询到的全部
 - [ ] 暂未处理好错误打印信息，没有将错误log记录文件
-- [ ] 增加类似plusplus这种消息推送
 - [ ] 尚未做好测试，目前是否存在其他问题暂不知道
+- [x] 增加类似plusplus这种消息推送
 - [x] windows打包linux失败

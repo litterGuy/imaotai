@@ -24,7 +24,8 @@ func GetConfig(path string) error {
 }
 
 type Config struct {
-	Account []*Account `yaml:"account" json:"account"`
+	Account  []*Account `yaml:"account" json:"account"`
+	PushPlus *PushPlus  `yaml:"pushplus" json:"pushplus"`
 }
 
 type Account struct {
@@ -37,4 +38,9 @@ type Account struct {
 	Province    string  `yaml:"province" json:"province"`       // 省份
 	City        string  `yaml:"city" json:"city"`               // 城市
 	ReserveType int     `yaml:"reserveType" json:"reserveType"` // 预约方式 1-预约本市出货量最大的门店 2-预约你的位置附近门店
+}
+
+type PushPlus struct {
+	Token string `yaml:"token" json:"token"`
+	Topic string `yaml:"topic" json:"topic"`
 }

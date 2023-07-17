@@ -7,6 +7,7 @@ import (
 	"imaotai/config"
 	"imaotai/db"
 	"imaotai/models"
+	"imaotai/msg"
 	"imaotai/reqfunc"
 	"imaotai/service"
 	"imaotai/task"
@@ -97,6 +98,7 @@ func main() {
 	// 每次启动 重新初始化数据
 	err = service.RefreshData(config.Configs)
 	if err != nil {
+		msg.SendPushPlus(err.Error())
 		panic(err)
 	}
 
