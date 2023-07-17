@@ -101,7 +101,10 @@ func main() {
 	}
 
 	// 启动定时任务
-	task.StartTask()
+	crontask := task.Init()
+	crontask.AddTask()
+	crontask.Task.Start()
+	defer crontask.Task.Stop()
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM)

@@ -16,7 +16,7 @@ import (
 func GetShopId(itemCode string, account config.Account) (string, error) {
 	//查询所在省市的投放产品和数量
 	var shopitems []*models.ShopItem
-	err := db.Gormdb.Where("province", account.Province).Where("itemId", itemCode).Find(&shopitems).Error
+	err := db.Gormdb.Where("province", account.Province).Where("item_id", itemCode).Find(&shopitems).Error
 	if err != nil {
 		return "", err
 	}
@@ -40,10 +40,26 @@ func GetShopId(itemCode string, account config.Account) (string, error) {
 			shopId = getMinDistanceShopId(shops, account.Province, account.Lat, account.Lng)
 		}
 	} else if account.ReserveType == 2 {
+		shoplist := getPartyShopList(shopitems, shops)
 		// 预约本省距离最近的门店
-		shopId = getMinDistanceShopId(shops, account.Province, account.Lat, account.Lng)
+		shopId = getMinDistanceShopId(shoplist, account.Province, account.Lat, account.Lng)
 	}
 	return shopId, nil
+}
+
+func getPartyShopList(list1 []*models.ShopItem, list2 []*models.ShopBean) []*models.ShopBean {
+	rt := make([]*models.ShopBean, 0)
+
+	tmpmap := make(map[string]*models.ShopBean)
+	for _, bean := range list2 {
+		tmpmap[bean.ShopID] = bean
+	}
+	for _, item := range list1 {
+		if t, ok := tmpmap[item.ShopID]; ok {
+			rt = append(rt, t)
+		}
+	}
+	return rt
 }
 
 // 预约本市出货量最大的门店

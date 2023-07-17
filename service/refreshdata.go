@@ -67,27 +67,26 @@ func RefreshData(configs *config.Config) error {
 	if err != nil {
 		return err
 	}
-	shopitemList := make([]*reqfunc.ShopItemBean, 0)
+	shopitemdblist := make([]*models.ShopItem, 0)
 	for _, item := range items {
 		for _, account := range configs.Account {
 			shopitems, err := reqfunc.GetShopsByProvince(account.Province, item.ItemCode, fmt.Sprintf("%v", session.SessionID))
 			if err != nil {
 				return err
 			}
-			shopitemList = append(shopitemList, shopitems...)
+			for _, shopitem := range shopitems {
+				shopitemdblist = append(shopitemdblist, &models.ShopItem{
+					ShopID:              shopitem.ShopID,
+					Count:               shopitem.Count,
+					MaxReserveCount:     shopitem.MaxReserveCount,
+					DefaultReserveCount: shopitem.DefaultReserveCount,
+					ItemID:              shopitem.ItemID,
+					Inventory:           shopitem.Inventory,
+					OwnerName:           shopitem.OwnerName,
+					Province:            account.Province,
+				})
+			}
 		}
-	}
-	shopitemdblist := make([]*models.ShopItem, 0)
-	for _, item := range shopitemList {
-		shopitemdblist = append(shopitemdblist, &models.ShopItem{
-			ShopID:              item.ShopID,
-			Count:               item.Count,
-			MaxReserveCount:     item.MaxReserveCount,
-			DefaultReserveCount: item.DefaultReserveCount,
-			ItemID:              item.ItemID,
-			Inventory:           item.Inventory,
-			OwnerName:           item.OwnerName,
-		})
 	}
 	err = db.Gormdb.CreateInBatches(shopitemdblist, 100).Error
 	if err != nil {
