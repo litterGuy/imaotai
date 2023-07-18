@@ -98,6 +98,13 @@ docker cp imaotai:/app/imaotai .
 0-跨市 1-不跨市
 ```
 
+### dockerfile 在阿里云构建过慢
+在dockerfile添加
+```
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories 
+```
+替换成阿里云资源
+
 ## 未添加事项
 
 - [ ] 没有指定哪种酒预约。目前是预约查询到的全部
