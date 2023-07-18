@@ -33,6 +33,9 @@ func Reservation(conf *config.Config) (string, error) {
 			if err != nil {
 				return "", err
 			}
+			if len(shopid) == 0 {
+				continue
+			}
 			rt, err := reqfunc.Reservation(reqfunc.UserInfo{
 				UserId: account.UserId,
 				Lat:    fmt.Sprintf("%v", account.Lat),

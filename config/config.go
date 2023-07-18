@@ -38,6 +38,7 @@ type Account struct {
 	Province    string  `yaml:"province" json:"province"`       // 省份
 	City        string  `yaml:"city" json:"city"`               // 城市
 	ReserveType int     `yaml:"reserveType" json:"reserveType"` // 预约方式 1-预约本市出货量最大的门店 2-预约你的位置附近门店
+	CrossCity   int     `yaml:"crossCity" json:"crossCity"`     // 本市没有，是否跨市预约 0-跨市 1-不跨市
 }
 
 type PushPlus struct {

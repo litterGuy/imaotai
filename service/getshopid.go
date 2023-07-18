@@ -37,12 +37,12 @@ func GetShopId(itemCode string, account config.Account) (string, error) {
 		//预约本市出货量最大的门店
 		shopId = getMaxInventoryShopId(shopitems, shops, account.City)
 		if len(shopId) == 0 {
-			shopId = getMinDistanceShopId(shops, account.Province, account.Lat, account.Lng)
+			shopId = getMinDistanceShopId(shops, account.Province, account.Lat, account.Lng, account.CrossCity, account.City)
 		}
 	} else if account.ReserveType == 2 {
 		shoplist := getPartyShopList(shopitems, shops)
 		// 预约本省距离最近的门店
-		shopId = getMinDistanceShopId(shoplist, account.Province, account.Lat, account.Lng)
+		shopId = getMinDistanceShopId(shoplist, account.Province, account.Lat, account.Lng, account.CrossCity, account.City)
 	}
 	return shopId, nil
 }
@@ -84,7 +84,7 @@ func getMaxInventoryShopId(list1 []*models.ShopItem, list2 []*models.ShopBean, c
 }
 
 // 预约本省距离最近的门店
-func getMinDistanceShopId(list2 []*models.ShopBean, province string, lat, lng float64) string {
+func getMinDistanceShopId(list2 []*models.ShopBean, province string, lat, lng float64, crosscity int, city string) string {
 	iShopList := make([]*models.ShopBean, 0)
 	for _, iShop := range list2 {
 		if strings.Contains(iShop.ProvinceName, province) {
@@ -110,7 +110,15 @@ func getMinDistanceShopId(list2 []*models.ShopBean, province string, lat, lng fl
 		return iShopList[i].Distance < iShopList[j].Distance
 	})
 
-	return iShopList[0].ShopID
+	shop := iShopList[0]
+	if crosscity == 1 {
+		// 不跨市预约
+		if shop.CityName != city {
+			return ""
+		}
+	}
+
+	return shop.ShopID
 }
 
 func parseLocation(str string) float64 {

@@ -91,6 +91,13 @@ docker cp imaotai:/app/imaotai .
 
 去[官网](http://www.pushplus.plus/push2.html)获取到token和topic后，填入到配置文件
 
+
+## 更新
+增加配置参数crossCity.
+```
+0-跨市 1-不跨市
+```
+
 ## 未添加事项
 
 - [ ] 没有指定哪种酒预约。目前是预约查询到的全部

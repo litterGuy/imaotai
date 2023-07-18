@@ -1,13 +1,13 @@
 account:
-  -
-    phone: 12234
+  - phone: 12234
     userId: 1234
     token: 1234
-    lat:  1234
-    lng:  1234
+    lat: 1234
+    lng: 1234
     province: 1234
     city: 1234
     reserveType: 1
+    crossCity: 1
 pushplus:
   token: 1234
   topic: 1234
