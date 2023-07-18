@@ -4,11 +4,18 @@ FROM golang:alpine
 # 开启交叉编译
 ENV CGO_ENABLED=1
 
+# 在阿里云服务器构建过慢问题
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+# 设置go代理
+RUN go env -w GOPROXY=https://goproxy.io
+RUN go env -w GOSUMDB=off
+
 # 官方并没有提供预编译的包，需要自己编译，但是直接编译的话会提示报错，需要在先安装一下g++
 RUN apk add --no-cache --virtual .build-deps \
     ca-certificates \
     gcc \
-    g++
+    g++ \
+    git
 
 # 设置工作目录
 WORKDIR /app
