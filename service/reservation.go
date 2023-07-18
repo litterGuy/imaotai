@@ -27,7 +27,8 @@ func Reservation(conf *config.Config) (string, error) {
 		return "", err
 	}
 	result := make([]string, 0)
-	for _, account := range conf.Account {
+	for i, account := range conf.Account {
+		result = append(result, fmt.Sprintf("------------帐号%v:%s--------------\n\n", i, account.Phone))
 		for _, item := range sessionitems {
 			shopid, err := GetShopId(item.ItemCode, *account)
 			if err != nil {
@@ -47,6 +48,7 @@ func Reservation(conf *config.Config) (string, error) {
 			}
 			result = append(result, rt)
 		}
+		result = append(result, "------------------------------\n\n")
 	}
 
 	return strings.Join(result, "\n"), nil
