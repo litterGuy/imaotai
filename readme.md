@@ -49,6 +49,12 @@ imaotai
 
 如果无异常，可等待预约完成后去app查看结果
 
+## 拉取docker镜像
+
+```
+docker pull litterguy/imaotai
+```
+
 ## 打包linux
 
 未解决windows下交叉编译的问题。因此增加dockerfile曲线处理一下。
