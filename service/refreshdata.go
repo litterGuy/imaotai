@@ -8,6 +8,7 @@ import (
 	"imaotai/db"
 	"imaotai/models"
 	"imaotai/reqfunc"
+	"log"
 )
 
 // RefreshData 刷新数据库
@@ -72,6 +73,7 @@ func RefreshData(configs *config.Config) error {
 		for _, account := range configs.Account {
 			shopitems, err := reqfunc.GetShopsByProvince(account.Province, item.ItemCode, fmt.Sprintf("%v", session.SessionID))
 			if err != nil {
+				log.Println(fmt.Sprintf("省市:%s,code:%s,sessionId:%v.erris : %s", account.Province, item.ItemCode, session.SessionID, err.Error()))
 				return err
 			}
 			for _, shopitem := range shopitems {
