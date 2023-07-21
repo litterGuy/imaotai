@@ -26,13 +26,15 @@ func Init() *CronTask {
 func (c *CronTask) AddTask() {
 
 	// 每日7点刷新一次数据
-	_, _ = c.Task.AddFunc("0 0 7 * * ?", func() {
+	_, _ = c.Task.AddFunc("0 10 7,8 * * ?", func() {
 		log.Printf("start task, and time = %d\n", time.Now().Unix())
 		err := service.RefreshData(config.Configs)
 		if err != nil {
 			log.Println(err.Error())
 			msg.SendPushPlus(err.Error())
+			return
 		}
+		msg.SendPushPlus("刷新列表完成")
 	})
 	// 每天9点20预约
 	_, _ = c.Task.AddFunc("0 20 9 * * ?", func() {
