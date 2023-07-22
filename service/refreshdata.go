@@ -70,7 +70,16 @@ func RefreshData(configs *config.Config) error {
 	}
 	shopitemdblist := make([]*models.ShopItem, 0)
 	for _, item := range items {
+		// 多账号下相同省份时,跳过处理
+		provinceMap := make(map[string]string)
+
 		for _, account := range configs.Account {
+
+			if _, ok := provinceMap[account.Province]; ok {
+				continue
+			}
+			provinceMap[account.Province] = account.Province
+
 			shopitems, err := reqfunc.GetShopsByProvince(account.Province, item.ItemCode, fmt.Sprintf("%v", session.SessionID))
 			if err != nil {
 				log.Println(fmt.Sprintf("省市:%s,code:%s,sessionId:%v.erris : %s", account.Province, item.ItemCode, session.SessionID, err.Error()))
