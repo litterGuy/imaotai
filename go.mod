@@ -1,4 +1,4 @@
-module imaotai
+module github.com/litterGuy/imaotai
 
 go 1.19
 
