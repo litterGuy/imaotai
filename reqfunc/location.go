@@ -9,7 +9,7 @@ import (
 )
 
 func GetLocationByAddress(address string) ([]Geocodes, error) {
-	url := fmt.Sprintf("https://restapi.amap.com/v3/geocode/geo?key=0a7f4baae0a5e37e6f90e4dc88e3a10d&output=json&address=%s", address)
+	url := fmt.Sprintf("https://restapi.amap.com/v3/geocode/geo?key=f939ebb07272452ce577174ccf20ff79&output=json&address=%s", address)
 	res, err := http.Get(url)
 	if err != nil {
 		return nil, err
